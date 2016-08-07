@@ -8,6 +8,7 @@
 
 import Vapor
 import Fluent
+import HTTP
 
 final class University: Model {
     
@@ -42,5 +43,15 @@ final class University: Model {
     
     static func revert(_ database: Database) throws {
         //
+    }
+}
+
+extension Sequence where Iterator.Element == University {
+    func makeJSON() -> JSON {
+        return .array(self.map { $0.makeJSON() })
+    }
+    
+    func makeResponse() -> Response {
+        return try! makeJSON().makeResponse()
     }
 }

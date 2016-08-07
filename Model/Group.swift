@@ -31,9 +31,11 @@ final class Group: Model {
             "id": id,
             "name": name,
             "short_name": short_name,
-            "year": year
+            "year": year,
+            "university_id" : university_id
             ])
     }
+    
     
     static func prepare(_ database: Database) throws {
         //
@@ -49,7 +51,7 @@ extension Sequence where Iterator.Element == Group {
         return .array(self.map { $0.makeJSON() })
     }
     
-    func makeResponse(request: Request) -> Response {
+    func makeResponse() -> Response {
         return try! makeJSON().makeResponse()
     }
 }
